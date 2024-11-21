@@ -1,6 +1,6 @@
 import axios from "axios";
-import useToken from "../hooks/useToken";
-
+import { useEffect, useState } from "react";
+import useToken  from "../hooks/useToken";
 import { useNavigate } from "react-router-dom";
 
 import Grid from '@mui/material/Grid2';
@@ -28,36 +28,34 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
   },
 }));
 
-type cursoRequest = {
-  curso: string;
+type GetRequest = {
+  id: string;
 };
 
-function AgregarFavoritos() {
+function BuscarMaterial() {
   // const { token } = useToken();
   
-  document.title = 'Crear curso';
+  document.title = 'Buscar Material';
+  //const [message, setMessage] = useState(null);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
-    const curso = (formData.get("curso") as string) || "";
-    
+    const id = (formData.get("id") as string) || "";
 
-    const request: cursoRequest = {
-      curso
+    const request: GetRequest = {
+      id
     };
-
-    
 
     try{
       console.log(request);
-       const res = await axios.post("http://localhost:8000/utec/curso",request
+       const res = await axios.get("http://3.90.3.179:8000/api/utec/curso", request 
     );
-    console.log("curso creado",res.data);
+    console.log("datos obtenidos",res.data);
+    setMessage(res.data);
     }catch(error){
-        console.log("error en añadir curso",error)   ///utec/curso
+        console.log("error en GET",error)
       }
-
 
   }
 
@@ -68,7 +66,7 @@ function AgregarFavoritos() {
   >
   <Item>
   
-  <h1 className="p-3 text-red-50 selection:text-red-50 font-semibold text-3xl"> Datos del Curso</h1>
+  <h1 className="p-3 text-red-50 selection:text-red-50 font-semibold text-3xl">Mostar datos</h1>
   <form
         onSubmit={handleSubmit}
         
@@ -77,16 +75,17 @@ function AgregarFavoritos() {
         <input
           className="outline rounded p-1"
           type="name"
-          placeholder="curso"
-          name="curso"
+          placeholder="id"
+          name="id"
         />
+        
   
         <ColorButton 
           className="rounded bg-red-400 hover:bg-blue-300 p-1"
           type="submit"
           variant="contained"
         >
-          añadir curso
+          borrar 
         </ColorButton >
       </form>
   </Item>
@@ -94,7 +93,7 @@ function AgregarFavoritos() {
   <Grid size={6}>
   <Item>2</Item>
   </Grid>
-  
+  message
   </Grid>
   </>
   );
@@ -102,5 +101,5 @@ function AgregarFavoritos() {
 
 
   
-export default AgregarFavoritos;
+export default BuscarMaterial;
   

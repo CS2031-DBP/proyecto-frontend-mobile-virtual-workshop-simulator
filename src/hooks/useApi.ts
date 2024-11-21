@@ -25,7 +25,7 @@ interface  LoginRequest  {
 //Registro
 export const login = async (request: LoginRequest) => {
   try {
-    const response = await axios.post<{ token: string }>(`${API_URL}/auth/login`, request);
+    const response = await axios.post<{ token: string, usuarioId: string }>(`${API_URL}/auth/login`, request);
     
     return response.data;
   } catch (error) {
@@ -37,6 +37,19 @@ export const register = async (request: LoginRequest) => {
   try {
     const response = await axios.post(`${API_URL}/auth/register`, request);
     
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getUsuario = async (id: string,token: string) => {
+  const n_id = Number(id);
+  try {
+    const response = await axios.get(`${API_URL}/usuarios/${n_id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+      params: {id},
+    });
     return response.data;
   } catch (error) {
     throw error;

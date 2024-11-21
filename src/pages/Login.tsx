@@ -3,6 +3,7 @@ import image from "../img/cat-menu.jfif";
 import { login } from "../hooks/useApi";
 import { useState } from 'react';
 import useToken from '../hooks/useToken';
+import useUsuarioId from '../hooks/useUsuarioId';
 
 import Button, { ButtonProps } from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -41,6 +42,7 @@ function Login() {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const { setToken } = useToken();
+  const { setUsuarioId } = useUsuarioId();
   
   
   document.title = 'Iniciar Sesion - Asesorias++';
@@ -65,9 +67,13 @@ function Login() {
     try {
       const response = await login(request);
       console.log("login con exito");
+      console.log(response);
       setMessage("login con exito");
       const { token } = response;
+      const { usuarioId } = response;
       setToken(token);
+      setUsuarioId(usuarioId);
+
       navigate("/menu");
     } catch (error) {
       console.error("Error en el login:", error);

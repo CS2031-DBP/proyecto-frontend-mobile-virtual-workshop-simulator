@@ -1,6 +1,7 @@
 import useToken from "../hooks/useToken";
 import { useNavigate, } from "react-router-dom";
 import { useEffect } from "react";
+import useUsuarioId from '../hooks/useUsuarioId';
 
 // import Grid from '@mui/material/Grid2';
 // import { styled } from '@mui/material/styles';
@@ -33,12 +34,15 @@ import { useEffect } from "react";
 
 function CerrarSesion() {
     const { setToken } = useToken();
+    const { setUsuarioId } = useUsuarioId();
     const navigate = useNavigate();
     document.title = 'En proceso..';
 
     useEffect(() => {
         setToken("");
+        setUsuarioId("0");
         navigate("/");
+        console.log("Session Cerrada y credenciales borradas")
     })
   
   

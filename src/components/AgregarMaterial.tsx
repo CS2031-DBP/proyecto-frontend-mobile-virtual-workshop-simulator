@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import useToken  from "../hooks/useToken";
+import useToken from "../hooks/useToken";
+
 import { useNavigate } from "react-router-dom";
 
 import Grid from '@mui/material/Grid2';
@@ -28,34 +28,36 @@ const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
   },
 }));
 
-type GetRequest = {
-  id: string;
+type cursoRequest = {
+  curso: string;
 };
 
-function MostarCurso() {
+function AgregarMaterial() {
   // const { token } = useToken();
   
-  document.title = 'mostrar';
-  const [message, setMessage] = useState(null);
+  document.title = 'Agragar Material';
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
-    const id = (formData.get("id") as string) || "";
+    const curso = (formData.get("curso") as string) || "";
+    
 
-    const request: GetRequest = {
-      id
+    const request: cursoRequest = {
+      curso
     };
+
+    
 
     try{
       console.log(request);
-       const res = await axios.get("http://3.90.3.179:8000/api/utec/curso", request 
+       const res = await axios.post("http://localhost:8000/utec/curso",request
     );
-    console.log("datos obtenidos",res.data);
-    setMessage(res.data);
+    console.log("curso creado",res.data);
     }catch(error){
-        console.log("error en GET",error)
+        console.log("error en añadir curso",error)   ///utec/curso
       }
+
 
   }
 
@@ -66,7 +68,7 @@ function MostarCurso() {
   >
   <Item>
   
-  <h1 className="p-3 text-red-50 selection:text-red-50 font-semibold text-3xl">Mostar datos</h1>
+  <h1 className="p-3 text-red-50 selection:text-red-50 font-semibold text-3xl"> Datos del Curso</h1>
   <form
         onSubmit={handleSubmit}
         
@@ -75,17 +77,16 @@ function MostarCurso() {
         <input
           className="outline rounded p-1"
           type="name"
-          placeholder="id"
-          name="id"
+          placeholder="curso"
+          name="curso"
         />
-        
   
         <ColorButton 
           className="rounded bg-red-400 hover:bg-blue-300 p-1"
           type="submit"
           variant="contained"
         >
-          borrar 
+          añadir curso
         </ColorButton >
       </form>
   </Item>
@@ -93,7 +94,7 @@ function MostarCurso() {
   <Grid size={6}>
   <Item>2</Item>
   </Grid>
-  message
+  
   </Grid>
   </>
   );
@@ -101,5 +102,5 @@ function MostarCurso() {
 
 
   
-export default MostarCurso;
+export default AgregarMaterial;
   

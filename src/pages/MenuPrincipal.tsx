@@ -13,9 +13,9 @@ import { useDemoRouter } from '@toolpad/core/internal';
 
 
 
-import AgregarCurso from "../components/AgregarCurso";
-import MostarCurso from "../components/MostarCurso";
-import EditarCurso from "../components/EditarCurso";
+import AgregarMaterial from "../components/AgregarMaterial";
+import BuscarMaterial from "../components/BuscarMaterial";
+import PerfilUsuario from "../components/PerfilUsuario";
 import CerrarSesion from "../components/CerrarSesion";
 
 
@@ -99,9 +99,9 @@ function DemoPageContent({ pathname }: { pathname: string }) {
         textAlign: 'center',
       }}
     >
-        {(pathname == "/dashboard1") ? <AgregarCurso /> : null}
-        {(pathname == "/dashboard2") ? <MostarCurso /> : null}
-        {(pathname == "/dashboard3") ? <EditarCurso /> : null}
+        {(pathname == "/dashboard1") ? <BuscarMaterial /> : null}
+        {(pathname == "/dashboard2") ? <AgregarMaterial /> : null}
+        {(pathname == "/dashboard3") ? <PerfilUsuario /> : null}
         {(pathname == "/dashboard4") ? <CerrarSesion /> : null}
         
 
