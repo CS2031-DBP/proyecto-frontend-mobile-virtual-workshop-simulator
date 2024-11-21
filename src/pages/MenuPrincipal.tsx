@@ -76,7 +76,24 @@ const demoTheme = createTheme({
   cssVariables: {
     colorSchemeSelector: 'data-Asesor-color-scheme',
   },
-  colorSchemes: { light: true, dark: true },
+  colorSchemes:  {
+    light: {
+      palette: {
+        background: {
+          default: '#256D3F',
+          paper: '#14241C',
+        },
+      },
+    },
+    dark: {
+      palette: {
+        background: {
+          default: '#121815',
+          paper: '#040B07',
+        },
+      },
+    },
+  },
   breakpoints: {
     values: {
       xs: 0,

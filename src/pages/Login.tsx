@@ -49,36 +49,44 @@ function Login() {
 
   async function handleRegister() {
     navigate("/register");
-    }
+  }
 
 
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
-    const email = (formData.get("email") as string) || "";
-    const password = (formData.get("password") as string) || "";
+    const email = (formData.get("email") as string || "");
+    const password = (formData.get("password") as string)|| "" ;
 
     const request: LoginRequest = {
       email,
       password,
     };
 
-    try {
-      const response = await login(request);
-      console.log("login con exito");
-      console.log(response);
-      setMessage("login con exito");
-      const { token } = response;
-      const { usuarioId } = response;
-      setToken(token);
-      setUsuarioId(usuarioId);
-
-      navigate("/menu");
-    } catch (error) {
-      console.error("Error en el login:", error);
-      setMessage("Error en el login:");
+    if (email || password ){
+      try {
+        console.log(request);
+        const response = await login(request);
+        console.log("login con exito");
+        console.log(response);
+        setMessage("login con exito");
+        const { token } = response;
+        const { usuarioId } = response;
+        setToken(token);
+        setUsuarioId(usuarioId);
+  
+        navigate("/menu");
+      } catch (error) {
+        console.error("Error en el login:", error);
+        setMessage("Error en el login:");
+      }
+    }else{
+      console.error("Formulario Vacio");
+        setMessage("Formulario Vacio,Solo se permiten formularios llenos");
     }
+
+    
   
   }
 
@@ -123,7 +131,7 @@ function Login() {
             Registro
           </ColorButton_r >
           </div>
-          <div className="text-white font-bold">
+          <div className="flex flex-col text-white font-bold bg-amber-900">
                {message} 
           </div>
         </form>

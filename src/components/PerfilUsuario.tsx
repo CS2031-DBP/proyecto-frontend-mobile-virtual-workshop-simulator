@@ -5,7 +5,7 @@ import useUsuarioId from '../hooks/useUsuarioId';
 import { getUsuario } from "../hooks/useApi";
 
 import Grid from '@mui/material/Grid2';
-import { styled } from '@mui/material/styles';
+import { styled, useColorScheme } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 // import { green } from '@mui/material/colors';
 // import Button, { ButtonProps } from '@mui/material/Button';
@@ -50,23 +50,35 @@ function PerfilUsuario() {
       }}
       fetchMessage();
 
+      
+
 })
 
   
 
   return (
-    <>
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-  <Grid size={6}
-  > {message}
-    
-  </Grid>
-  <Grid size={6}>
-  <Item>2</Item>
-  </Grid>
-  
-  </Grid>
+  <>
+  <div className='  justify-center'> 
+   <Grid  container spacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+    <Grid size={7} >
+      <Item>
+      size=4
+      </Item>
+    </Grid>
+    <Grid size={4}>
+      <Item>
+        size=4
+      </Item>
+    </Grid>
+    <Grid size={11}>
+      <Item>
+        size=8
+      </Item>
+    </Grid>
+   </Grid>
+  </div>
   </>
+  
   );
 }
 

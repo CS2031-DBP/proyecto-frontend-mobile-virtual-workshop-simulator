@@ -63,7 +63,7 @@ function Register() {
       email,
       password,
     };
-
+  if (email  || password  ||nombre ){
     try {
       await register(request);
       setMessage("Se registró con exito");
@@ -73,6 +73,11 @@ function Register() {
       setMessage("Error en el registro:");
       console.error("Error en el registro:", error);
     }
+  }else{
+    console.error("Formulario Vacio");
+      setMessage("Formulario Vacio,Solo se permiten formularios llenos");
+  }
+   
   
   }
 
@@ -124,7 +129,8 @@ function Register() {
             Iniciar sesión
           </ColorButton_i >
           </div>
-          <div className="text-white font-bold">
+      
+          <div className="text-white font-bold flex flex-col  bg-amber-900" >
                {message} 
           </div>
         </form>
