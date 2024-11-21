@@ -21,6 +21,15 @@ const Item = styled(Paper)(({ theme }) => ({
   }),
 }));
 
+
+interface User {
+  id: string;
+  nombre: string;
+  email: string;
+  perfilUrl: string;
+  fechaRegistro: string;
+
+}
 // const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 //   color: theme.palette.getContrastText(green[500]),
 //   backgroundColor: green[500],
@@ -33,7 +42,7 @@ const Item = styled(Paper)(({ theme }) => ({
 function PerfilUsuario() {
   const { usuarioId } = useUsuarioId();
   const { token } = useToken();
-  const [message, setMessage] = useState([]);
+  const [users, setUsers] =useState<User[]>([]);
   document.title = 'Perfil de Usuario';
   
 
@@ -43,7 +52,7 @@ function PerfilUsuario() {
       
         const response = await getUsuario(usuarioId,token);
         console.log("Usuario obtenido con exito",response);
-        setMessage(response.data);
+        setUsers(response as User[]);
       } catch (error) {
         console.error("Error en obtener usuario:", error);
       
@@ -62,7 +71,15 @@ function PerfilUsuario() {
    <Grid  container spacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
     <Grid size={7} >
       <Item>
-      size=4
+        {users.map((Item) => (
+          <div>
+            <h3 className="text-lg font-bold">Nombre de Usuario: {Item.nombre}</h3>
+            <p>Id de Usuario: {Item.id}</p>
+            <p className="text-green-500 font-bold">Email del Usuario: {Item.email}</p>
+            <p>Url de Perfil del Usuario: {Item.perfilUrl}</p>
+            <p>Fecha de Registro Usuario: {Item.fechaRegistro}</p>
+          </div>
+        ))}
       </Item>
     </Grid>
     <Grid size={4}>
