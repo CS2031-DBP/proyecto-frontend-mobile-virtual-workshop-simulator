@@ -47,8 +47,8 @@ export const getUsuario = async (id: string,token: string) => {
   const n_id = Number(id);
   try {
     const response = await axios.get(`${API_URL}/usuarios/${n_id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-      params: {id},
+      headers: { Authorization: `Bearer ${token}` }
+      
     });
     return response.data;
   } catch (error) {

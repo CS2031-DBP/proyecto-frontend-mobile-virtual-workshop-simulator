@@ -12,6 +12,7 @@ import FindInPageIcon from '@mui/icons-material/FindInPage';
 type RegisterRequest = {
   nombre:string;
   email: string;
+  perfilUrl: string;
   password: string;
 };
 
@@ -57,10 +58,12 @@ function Register() {
     const nombre = (formData.get("nombre") as string) || "";
     const email = (formData.get("email") as string) || "";
     const password = (formData.get("password") as string) || "";
+    const perfilUrl  = (formData.get("perfilUrl") as string) || "";
 
     const request: RegisterRequest = {
       nombre,
       email,
+      perfilUrl,
       password,
     };
   if (email  || password  ||nombre ){
@@ -93,7 +96,15 @@ function Register() {
           onSubmit={handleSubmit}
           
           className="space-y-5 flex flex-col mx-auto"
+
+          
         >
+          <input
+            className="outline rounded p-1"
+            type="nombre"
+            placeholder="URL Foto de Perfil"
+            name="perfilUrl"
+          />
           <input
             className="outline rounded p-1"
             type="nombre"
