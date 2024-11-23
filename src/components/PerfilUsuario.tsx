@@ -23,14 +23,15 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 
-interface User {
-  id: string;
-  nombre: string;
-  email: string;
-  perfilUrl: string;
-  fechaRegistro: string;
+// interface User {
+//   id: string;
+//   nombre: string;
+//   email: string;
+//   perfilUrl: string;
+//   fechaRegistro: string;
+// }
 
-}
+// }
 // const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
 //   color: theme.palette.getContrastText(green[500]),
 //   backgroundColor: green[500],
@@ -43,7 +44,14 @@ interface User {
 function PerfilUsuario() {
   const { usuarioId } = useUsuarioId();
   const { token } = useToken();
-  const [users, setUsers] =useState([]);
+  const [users, setUsers] =useState([{
+    id: "",
+    nombre: "",
+    email: "",
+    perfilUrl: "",
+    fechaRegistro: ""
+  }]);
+
   document.title = 'Perfil de Usuario';
   
 
@@ -53,13 +61,13 @@ function PerfilUsuario() {
       
         const response = await getUsuario(usuarioId,token);
         console.log("Usuario obtenido con exito",response);
-        setUsers(response);
+        setUsers([response]);
       } catch (error) {
         console.error("Error en obtener usuario:", error);
       
   }}
    fetchMessage();
-  }, []);
+  }, [token,usuarioId]);
   
   
    
@@ -77,11 +85,22 @@ function PerfilUsuario() {
    <Grid  container spacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
     <Grid size={7} >
       <Item>
-      <h1 className="text-center p-3 text-red-50 font-semibold text-2xl">Datos del Usuario Actual</h1>  
-      <p className='text-left'>Id de Usuario: {users.id}</p>
-      <p className='text-left'>Email del Usuario: {users.email}</p>
+        {users.map((user) =>(
+          <div
+          key={user.id}
+          className="border p-4 rounded cursor-pointer"
+          >
+          <h1 className="text-center p-3 text-red-50 font-semibold text-2xl">Datos del Usuario Actual</h1> 
+          <p className='text-left'>Id de Usuario: {user.id}</p>
+          <p className='text-left'>Email del Usuario: {user.email}</p>
+          <p className='text-left'>Fecha de Registro Usuario: {user.fechaRegistro}</p>
+          </div>
+        ))
+
+        }
+      
       {/* <p className='text-left'>Url de Perfil del Usuario: {users.perfilUrl}</p> */}
-      <p className='text-left'>Fecha de Registro Usuario: {users.fechaRegistro}</p> 
+      
         {/* {users && users.map((Item) => (
           <div > */}
             {/* <h3 className="text-lg font-bold">Nombre de Usuario: {Item.nombre}</h3> */}
@@ -95,18 +114,36 @@ function PerfilUsuario() {
     <Grid size={4}>
       <Item>
         {/* {({users.perfilUrl} != null ) ? <img src={users.perfilUrl} alt="Foto de Perfil" width="100%" height="100%" /> : <p className='text-left'>No existe foto de perifl </p>} */}
-        <div className='flex justify-center' > 
-        <img src={users.perfilUrl} alt="Foto de Perfil"  width="100px" height="auto"  aspect-ratio="1/1" />
         
-        </div>
-        <h1 className="text-center p-3 text-red-50 font-semibold text-1xl">Foto de Perfill</h1>  
+        {users.map((user) =>(
+          <div key={user.id}className='flex justify-center'>
+          <img src={user.perfilUrl} alt="Foto de Perfil"  width="200px" height="auto"  aspect-ratio="1/1" />
+          
+          </div>
+        ))
+        }
+        <div className='flex justify-center'> <h1 className="text-center p-3 text-red-50 font-semibold text-1xl">Foto de Perfill</h1>   </div>
         
       </Item>
     </Grid>
     <Grid size={11}>
       <Item>
-      <h1 className="text-center p-3 text-red-50 font-semibold text-2xl">Carreras Inscritos</h1>  
-        size=8
+      <h1 className="text-center p-3 text-red-50 font-semibold text-2xl">Carreras Inscritas</h1>  
+      
+       {/* {{users.carreras}.map((item) = (
+                
+       ))
+
+       } */}
+
+        {/* {/* {users && users.map((Item) => (
+          <div > */}
+            {/* <h3 className="text-lg font-bold">Nombre de Usuario: {Item.nombre}</h3> */}
+      {/* <p className="text-green-500 font-bold">Email del Usuario: {users.email}</p>
+      <p>Url de Perfil del Usuario: {users.perfilUrl}</p>
+      <p>Fecha de Registro Usuario: {users.fechaRegistro}</p> */}
+          {/* </div>
+        // ))} */}
       </Item>
     </Grid>
    </Grid>

@@ -7,7 +7,7 @@ import Button, { ButtonProps } from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import { blue } from '@mui/material/colors';
 import { green } from '@mui/material/colors';
-import FindInPageIcon from '@mui/icons-material/FindInPage';
+// import FindInPageIcon from '@mui/icons-material/FindInPage';
 
 type RegisterRequest = {
   nombre:string;

@@ -1,7 +1,7 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import useToken  from "../hooks/useToken";
-import { useNavigate } from "react-router-dom";
+import {  useState } from "react";
+// import useToken  from "../hooks/useToken";
+// import { useNavigate } from "react-router-dom";
 
 import Grid from '@mui/material/Grid2';
 import { styled } from '@mui/material/styles';
@@ -36,7 +36,7 @@ function BuscarMaterial() {
   // const { token } = useToken();
   
   document.title = 'Buscar Material';
-  //const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState(null);
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -49,8 +49,7 @@ function BuscarMaterial() {
 
     try{
       console.log(request);
-       const res = await axios.get("http://3.90.3.179:8000/api/utec/curso", request 
-    );
+       const res = await axios.get("http://3.90.3.179:8000/api/utec/curso" );
     console.log("datos obtenidos",res.data);
     setMessage(res.data);
     }catch(error){
@@ -93,7 +92,7 @@ function BuscarMaterial() {
   <Grid size={6}>
   <Item>2</Item>
   </Grid>
-  message
+  {message}
   </Grid>
   </>
   );
