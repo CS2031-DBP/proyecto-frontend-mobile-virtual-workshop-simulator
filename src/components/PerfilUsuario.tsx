@@ -44,6 +44,10 @@ const Item = styled(Paper)(({ theme }) => ({
 function PerfilUsuario() {
   const { usuarioId } = useUsuarioId();
   const { token } = useToken();
+  const [carrera_e, setCarrera_e] = useState([{
+    id: "",
+    nombre: ""
+  }])
   const [users, setUsers] =useState([{
     id: "",
     nombre: "",
@@ -62,12 +66,17 @@ function PerfilUsuario() {
         const response = await getUsuario(usuarioId,token);
         console.log("Usuario obtenido con exito",response);
         setUsers([response]);
+        setCarrera_e([response.carreras]);
+        console.log([response.carreras]);
+        
       } catch (error) {
         console.error("Error en obtener usuario:", error);
       
   }}
    fetchMessage();
+   
   }, [token,usuarioId]);
+  console.log(users);
   
   
    
@@ -78,7 +87,7 @@ function PerfilUsuario() {
 
 
   
-
+  console.log(carrera_e);
   return (
   <>
   <div className='  justify-center'> 
@@ -114,36 +123,30 @@ function PerfilUsuario() {
     <Grid size={4}>
       <Item>
         {/* {({users.perfilUrl} != null ) ? <img src={users.perfilUrl} alt="Foto de Perfil" width="100%" height="100%" /> : <p className='text-left'>No existe foto de perifl </p>} */}
-        
         {users.map((user) =>(
           <div key={user.id}className='flex justify-center'>
           <img src={user.perfilUrl} alt="Foto de Perfil"  width="200px" height="auto"  aspect-ratio="1/1" />
           
           </div>
         ))
+
         }
+        
         <div className='flex justify-center'> <h1 className="text-center p-3 text-red-50 font-semibold text-1xl">Foto de Perfill</h1>   </div>
         
       </Item>
     </Grid>
     <Grid size={11}>
       <Item>
-      <h1 className="text-center p-3 text-red-50 font-semibold text-2xl">Carreras Inscritas</h1>  
       
-       {/* {{users.carreras}.map((item) = (
-                
-       ))
+      <h1 className="text-center p-3 text-red-50 font-semibold text-2xl">Carreras Inscritas</h1>  
+      {carrera_e.map((test1,index) =>(
+          <div key={index}className='flex justify-center'>
+            <p className='text-left'>Nombre: {test1.id}</p>
+          </div>
+        ))
+        }
 
-       } */}
-
-        {/* {/* {users && users.map((Item) => (
-          <div > */}
-            {/* <h3 className="text-lg font-bold">Nombre de Usuario: {Item.nombre}</h3> */}
-      {/* <p className="text-green-500 font-bold">Email del Usuario: {users.email}</p>
-      <p>Url de Perfil del Usuario: {users.perfilUrl}</p>
-      <p>Fecha de Registro Usuario: {users.fechaRegistro}</p> */}
-          {/* </div>
-        // ))} */}
       </Item>
     </Grid>
    </Grid>
