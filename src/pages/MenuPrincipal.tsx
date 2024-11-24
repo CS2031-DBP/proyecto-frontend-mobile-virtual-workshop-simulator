@@ -17,6 +17,7 @@ import AgregarMaterial from "../components/AgregarMaterial";
 import BuscarMaterial from "../components/BuscarMaterial";
 import PerfilUsuario from "../components/PerfilUsuario";
 import CerrarSesion from "../components/CerrarSesion";
+import BuscarActividades from "../components/BuscarActividades";
 
 
 const NAVIGATION: Navigation = [
@@ -27,6 +28,11 @@ const NAVIGATION: Navigation = [
   {
     segment: 'dashboard1',
     title: 'Buscar Materiales',
+    icon: <FindInPageIcon />,
+  },
+  {
+    segment: 'dashboard5',
+    title: 'Buscar Actividades',
     icon: <FindInPageIcon />,
   },
  
@@ -115,11 +121,12 @@ function DemoPageContent({ pathname }: { pathname: string }) {
         alignItems: "stretch",
         textAlign: 'center',
       }}
-    >
+    >    
         {(pathname == "/dashboard1") ? <BuscarMaterial /> : null}
         {(pathname == "/dashboard2") ? <AgregarMaterial /> : null}
         {(pathname == "/dashboard3") ? <PerfilUsuario /> : null}
         {(pathname == "/dashboard4") ? <CerrarSesion /> : null}
+        {(pathname == "/dashboard5") ? <BuscarActividades /> : null}
         
 
       {/* <Typography>Dashboard content for {pathname}</Typography> */}

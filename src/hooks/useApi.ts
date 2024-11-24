@@ -1,59 +1,47 @@
 import axios from 'axios';
-// import useToken from '../hooks/useToken';
 
 const API_URL = 'http://localhost:8080';
 
-// interface User {
-//   fullName: string;
-//   email: string;
-//   password: string;
-//   username: string;
-// }
-
-// interface Product {
-//   name: string;
-//   description: string;
-//   price: number;
-//   quantity: number;
-//   imageUrl: string;
-// }
 interface  LoginRequest  {
   email: string;
   password: string;
 };
 
-//Registro
+
+//login
 export const login = async (request: LoginRequest) => {
-  try {
     const response = await axios.post<{ token: string, usuarioId: string }>(`${API_URL}/auth/login`, request);
-    
     return response.data;
-  } catch (error) {
-    throw error;
-  }
 };
-
+//Registro
 export const register = async (request: LoginRequest) => {
-  try {
     const response = await axios.post(`${API_URL}/auth/register`, request);
-    
     return response.data;
-  } catch (error) {
-    throw error;
-  }
 };
-
+//obtener informacion de un usuario
 export const getUsuario = async (id: string,token: string) => {
   const n_id = Number(id);
-  try {
     const response = await axios.get(`${API_URL}/usuarios/${n_id}`, {
       headers: { Authorization: `Bearer ${token}` }
       
-    });
+    })
     return response.data;
-  } catch (error) {
-    throw error;
-  }
+};
+//obtener los cursos de un usuario
+export const getCursos = async (id: string,token: string) => {
+  const n_id = Number(id);
+    const response = await axios.get(`${API_URL}/usuarios/listaAllCursos/${n_id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+      
+    })
+    return response.data;
+};
+//obtener las actividades del curso
+export const getActividadedByIdOrName = async (token: string,search: string) => {
+    const response = await axios.get(`${API_URL}/cursos/actividades/${search}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    return response.data;
 };
 
 // // Configuración de Axios para incluir el token en las solicitudes de productos

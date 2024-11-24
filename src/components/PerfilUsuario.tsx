@@ -1,8 +1,10 @@
+
 import { useState } from 'react';
 import { useEffect } from "react";
 import useToken from '../hooks/useToken';
 import useUsuarioId from '../hooks/useUsuarioId';
 import { getUsuario } from "../hooks/useApi";
+import { getCursos } from "../hooks/useApi";
 
 import Grid from '@mui/material/Grid2';
 import { styled } from '@mui/material/styles';
@@ -22,14 +24,16 @@ const Item = styled(Paper)(({ theme }) => ({
   }),
 }));
 
-
-// interface User {
+// interface Curso {
 //   id: string;
 //   nombre: string;
-//   email: string;
-//   perfilUrl: string;
-//   fechaRegistro: string;
 // }
+// interface Carrera {
+//   id: string;
+//   nombre: string;
+//   cursos: Curso;
+// }
+
 
 // }
 // const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
@@ -39,55 +43,96 @@ const Item = styled(Paper)(({ theme }) => ({
 //     backgroundColor: green[700],
 //   },
 // }));
+// eslint-disable-@typescript-eslint/no-explicit-any
+// const Colors=({data})=>{
+//   console.log(data);
+//   for (let i = 0; i < 2;  i++) {
+//     return(
+//       <>
+       
+//       </>
+//   )
+//   }
+  
+// }
 
 
 function PerfilUsuario() {
   const { usuarioId } = useUsuarioId();
   const { token } = useToken();
-  const [carrera_e, setCarrera_e] = useState([{
-    id: "",
-    nombre: ""
-  }])
-  const [users, setUsers] =useState([{
-    id: "",
-    nombre: "",
-    email: "",
-    perfilUrl: "",
-    fechaRegistro: ""
-  }]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [carrera_e, setCarrera_e] = useState<any[]>([]);
+  // const [cursos, setCursos] = useState<Curso[]>([])
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [users, setUsers] = useState<any[]>([]);
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [cursos,setCursos]=useState<any[]>([]);
 
   document.title = 'Perfil de Usuario';
+
+  
   
 
   useEffect(() => {
     async function fetchMessage(){
+      //get careras
       try {
-      
+        
         const response = await getUsuario(usuarioId,token);
-        console.log("Usuario obtenido con exito",response);
+        //console.log("Usuario obtenido con exito",response);
         setUsers([response]);
-        setCarrera_e([response.carreras]);
-        console.log([response.carreras]);
+        
+        // const obj = new Object();
+        
+        // for (let i = 0; i < 2;  i++) {
+        //   Array.prototype.push.call(obj,response.carreras[i].cursos );
+        // }
+        // console.log([obj]);
+
+        console.log([response]);
+        setCarrera_e(response.carreras);
+        // setColorsData(response);
+      //  setCursos([response.carreras.cursos]);
+        // console.log([response.carreras]);
+        // for (const [key, value] of Object.entries([response.carreras[1].cursos])) {
+        //   console.log(`${key}: ${value.nombre}`);
+        // }
         
       } catch (error) {
         console.error("Error en obtener usuario:", error);
       
-  }}
+      
+  }
+
+  //get cursos
+  try {
+        
+    const fes = await getCursos(usuarioId,token);
+    //console.log("Usuario obtenido con exito",response);
+    setCursos(fes);
+    
+    
+    console.log([fes]);
+    // setColorsData(response);
+  //  setCursos([response.carreras.cursos]);
+    // console.log([response.carreras]);
+    // for (const [key, value] of Object.entries([response.carreras[1].cursos])) {
+    //   console.log(`${key}: ${value.nombre}`);
+    // }
+    
+  } catch (error) {
+    console.error("Error en obtener cursos:", error);
+  
+  
+}
+
+}
    fetchMessage();
    
   }, [token,usuarioId]);
-  console.log(users);
+  //console.log(users);
   
-  
-   
-
-
-      
-
-
-
-  
-  console.log(carrera_e);
+  //console.log(carrera_e);
   return (
   <>
   <div className='  justify-center'> 
@@ -107,17 +152,7 @@ function PerfilUsuario() {
         ))
 
         }
-      
-      {/* <p className='text-left'>Url de Perfil del Usuario: {users.perfilUrl}</p> */}
-      
-        {/* {users && users.map((Item) => (
-          <div > */}
-            {/* <h3 className="text-lg font-bold">Nombre de Usuario: {Item.nombre}</h3> */}
-      {/* <p className="text-green-500 font-bold">Email del Usuario: {users.email}</p>
-      <p>Url de Perfil del Usuario: {users.perfilUrl}</p>
-      <p>Fecha de Registro Usuario: {users.fechaRegistro}</p> */}
-          {/* </div>
-        // ))} */}
+
       </Item>
     </Grid>
     <Grid size={4}>
@@ -136,19 +171,24 @@ function PerfilUsuario() {
         
       </Item>
     </Grid>
-    <Grid size={11}>
+    <Grid size={5}>
       <Item>
       
       <h1 className="text-center p-3 text-red-50 font-semibold text-2xl">Carreras Inscritas</h1>  
-      {carrera_e.map((test1,index) =>(
-          <div key={index}className='flex justify-center'>
-            <p className='text-left'>Nombre: {test1.id}</p>
-          </div>
-        ))
-        }
-
+      {
+        carrera_e &&  carrera_e.map((item,re)=><div key={re}><p>{item.nombre}</p> </div>)
+      }
       </Item>
     </Grid>
+    <Grid size={6}>
+      <Item>
+      <h1 className="text-center p-3 text-red-50 font-semibold text-2xl">Cursos Inscritos</h1>  
+      {
+        cursos &&  cursos.map((item,re)=><div key={re}> <p className='text-left' >Id del curso: {item.id}</p> <p className='text-left'> Nombre del curso: {item.nombre}</p> </div>)
+      }
+      </Item>
+    </Grid>
+    
    </Grid>
   </div>
   </>
